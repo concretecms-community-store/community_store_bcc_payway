@@ -1,5 +1,5 @@
 {
-    "name": "concrete5-community-store/community_store_bcc_payway",
+    "name": "concretecms-community-store/community_store_bcc_payway",
     "description": "BCC PayWay Payment Method for the Community Store package of ConcreteCMS",
     "type": "concrete5-package",
     "require": {
