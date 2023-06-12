@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: community_store_bcc_payway 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-06-11T21:34:06+02:00\n"
+"PO-Revision-Date: 2023-06-11T21:34:06+02:00\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+
+#: packages/community_store_bcc_payway/controller.php:47
+msgid "BCC PayWay Payment Method"
+msgstr "Modalità di paagmento BCC PayWay"
+
+#: packages/community_store_bcc_payway/controller.php:57
+msgid "BCC PayWay Payment Method for Community Store"
+msgstr "Modalità di paagmento BCC PayWay per Community Store"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/checkout_form.php:21
+msgid "We accept the most used credit cards."
+msgstr "Accettiamo le carte di credito più diffuse."
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/checkout_form.php:23
+msgid "We accept these credit cards:"
+msgstr "Accettiamo queste carte di credito:"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:26
+msgid "Environment to be used"
+msgstr "Ambiente da usare"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:35
+#, php-format
+msgid "URL of the bank services (environment: %s)"
+msgstr "URL dei servizi bancari (ambiente: %s)"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:39
+#, php-format
+msgid "Terminal ID (environment: %s)"
+msgstr "ID terminale (ambiente: %s)"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:43
+#, php-format
+msgid "Signature Key (environment: %s)"
+msgstr "Chiave per la firma (ambiente: %s)"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:66
+msgid "Credit card images to be displayed"
+msgstr "Immagini delle carte di credito da mostrare"
+
+#: packages/community_store_bcc_payway/elements/bcc_payway/dashboard_form.php:68
+msgid "Click on the images to disable them, drag them to change the order."
+msgstr "Fare clic sulle immagini per disabilitarle, trascinarle per cambiarne l’ordine."
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Error.php:46
+msgid "Payment not possible"
+msgstr "Pagamento non possibile"
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Error.php:48
+msgid "We are sorry: the payment system is not currently available."
+msgstr "Siamo spiacenti: il sistema di pagamento non è disponibile al moment."
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Error.php:50
+msgid "Please try again later."
+msgstr "Riprovare più tardi."
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Error.php:53
+#, php-format
+msgid "Error code: %s"
+msgstr "Codice d’errore: %s"
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:106
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:109
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:146
+#, php-format
+msgid "Missing parameter: %s"
+msgstr "Parametro mancante: %s"
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:113
+#, php-format
+msgid "'%s' is not a valid/known shopID"
+msgstr "“%s” non è un shopID valido/conosciuto"
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:117
+#, php-format
+msgid "The shopID '%1$s' should be associated to the '%2$s' paymentID, but we received '%3$s'"
+msgstr ""
+"Lo shopID “%1$s” dovrebbe essere associato al paymentID “%2$s”, ma abbiamo "
+"ricevuto “%3$s”"
+
+#: packages/community_store_bcc_payway/src/Service/Callback/Server2Server.php:150
+#, php-format
+msgid "'%s' is not a valid/known terminal ID"
+msgstr "“%s” non è un ID terminale valido/conosciuto"
+
+#: packages/community_store_bcc_payway/src/Service/CreditCardImages.php:144
+#, php-format
+msgid "Pay with %s"
+msgstr "Paga con %s"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:33
+msgid "Checkout with BCC PayWay"
+msgstr "Paga con BCC PayWay"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:64
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:90
+msgid "Test"
+msgstr "Test"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:65
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:91
+msgid "Production"
+msgstr "Produzione"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:105
+msgid "Please specify which environment should be used for BCC PayWay"
+msgstr "Specificare quale ambiente usare con BCC PayWay"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:118
+#, php-format
+msgid "Please specify the URL of the bank services for the %s environment of BCC PayWay"
+msgstr "Specificare l’URL dei servizi bancari per l’ambiente %s di BCC PayWay"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:120
+#, php-format
+msgid "The URL of the bank services for the %s environment of BCC PayWay is wrong"
+msgstr "L’URL dei servizi bancari per l’ambiente %s di BCC PayWay è errato"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:124
+#, php-format
+msgid "Please specify the terminal ID for the %s environment of BCC PayWay"
+msgstr "Specificare l’ID del terminale per l’ambiente %s di BCC PayWay"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:128
+#, php-format
+msgid "Please specify the signature key for the %s environment of BCC PayWay"
+msgstr "Specificare la chiave per la firma per l’ambiente %s di BCC PayWay"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:192
+msgid "The currency is not configured, or it has a wrong value"
+msgstr "La valuta non è configurata, oppure ha un valore non valido"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:215
+#, php-format
+msgid "Order %1$s on %2$s"
+msgstr "Ordine %1$s su %2$s"
+
+#: packages/community_store_bcc_payway/src/BccPaywayPaymentMethod.php:263
+#, php-format
+msgid "Transaction initialization failed (error code: %s)"
+msgstr "L’inizializzazione della transazione è fallita (codice d’errore: %s)"
