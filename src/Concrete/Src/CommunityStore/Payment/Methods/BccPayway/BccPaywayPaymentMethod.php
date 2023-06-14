@@ -113,7 +113,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
             $servicesURL = is_string($args['bccPaywayServicesURL_' . $environmentKey]) ? trim($args['bccPaywayServicesURL_' . $environmentKey]) : '';
             if ($servicesURL === '') {
                 $e->add(t('Please specify the URL of the bank services for the %s environment of BCC PayWay', $environmentName), 'bccPaywayServicesURL_' . $environmentKey);
-            } elseif (strpos($servicesURL, '?') !== false || !filter_var($servicesURL, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
+            } elseif (PayWay\Client::normalizeServicesUrl($servicesURL) === '') {
                 $e->add(t('The URL of the bank services for the %s environment of BCC PayWay is wrong', $environmentName), 'bccPaywayServicesURL_' . $environmentKey);
             }
             $terminalID = is_string($args['bccPaywayTerminalID_' . $environmentKey]) ? trim($args['bccPaywayTerminalID_' . $environmentKey]) : '';
