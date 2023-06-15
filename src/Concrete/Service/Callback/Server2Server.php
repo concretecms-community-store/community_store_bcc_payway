@@ -56,7 +56,7 @@ class Server2Server
             $verifyLog->setInitLog($initLog);
             $request = $this->createInitRequest($receivedData);
             $verifyLog->setRequestJson(json_encode($request, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            $payWayClient = $this->resolvepayWayClient($initLog);
+            $payWayClient = $this->resolvepayWayClient($receivedData);
             $payWayClient->addListener(static function (PayWay\Http\Event $event) use ($verifyLog) {
                 $verifyLog
                     ->setRequestUrl($event->getUrl())

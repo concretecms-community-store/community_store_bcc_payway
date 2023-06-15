@@ -3,7 +3,7 @@
     "description": "BCC PayWay Payment Method for the Community Store package of ConcreteCMS",
     "type": "concrete5-package",
     "require": {
-        "mlocati/payway": "^0.0.2"
+        "mlocati/payway": "^0.0.3"
     },
     "license": "MIT",
     "authors": [
