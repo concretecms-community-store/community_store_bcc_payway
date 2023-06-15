@@ -123,8 +123,8 @@ class Controller extends Package implements ProviderAggregateInterface
     private function registerRoutes()
     {
         $router = $this->app->make(Router::class);
-        $router->get(static::PATH_CALLBACK_STANDARD, Callback\Standard::class);
-        $router->post(static::PATH_CALLBACK_SERVER2SERVER, Callback\Server2Server::class);
-        $router->get(static::PATH_CALLBACK_ERROR, Callback\Error::class);
+        $router->get(static::PATH_CALLBACK_STANDARD, [Callback\Standard::class, '__invoke']);
+        $router->post(static::PATH_CALLBACK_SERVER2SERVER, [Callback\Server2Server::class, '__invoke']);
+        $router->get(static::PATH_CALLBACK_ERROR, [Callback\Error::class, '__invoke']);
     }
 }
