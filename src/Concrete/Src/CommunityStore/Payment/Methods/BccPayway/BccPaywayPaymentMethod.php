@@ -193,6 +193,9 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $shopID = $orderID . chr(round(mt_rand(ord('a'), ord('f')))) . $app->make(Identifier::class)->getString(40);
         $order = CommunityStore\Order\Order::getByID($orderID);
         $initLog = new CommunityStoreBccPayway\Entity\InitLog($client->getEnvironment(), $order, $shopID);
+        if ($initLog->getEnvironment() === '') {
+            throw new RuntimeException(t('The environment is not configured'));
+        }
         $initResponse = null;
         try {
             $customer = new CommunityStore\Customer\Customer();

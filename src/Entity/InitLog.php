@@ -145,9 +145,9 @@ class InitLog
     public function __construct($environment, Order $associatedOrder, $shopID)
     {
         $this->createdOn = new DateTime();
-        $this->environment = $environment;
+        $this->environment = (string) $environment;
         $this->associatedOrder = $associatedOrder;
-        $this->shopID = $shopID;
+        $this->shopID = (string) $shopID;
         $this->requestJson = '';
         $this->requestUrl = '';
         $this->requestXml = '';
