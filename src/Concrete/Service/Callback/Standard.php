@@ -56,7 +56,7 @@ class Standard
         }
         /** @var Entity\InitLog $init */
         $verify = $init->getVerifyLogs()->last();
-        if ($verify === null) {
+        if ($verify === null || $verify === false) {
             return $this->responseFactory->redirect(['/checkout'], Response::HTTP_MOVED_PERMANENTLY);
         }
         /** @var Entity\VerifyLog $verify */
