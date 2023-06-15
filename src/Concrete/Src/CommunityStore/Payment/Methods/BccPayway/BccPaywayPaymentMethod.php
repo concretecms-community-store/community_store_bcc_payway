@@ -190,7 +190,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
             throw new RuntimeException(t('The currency is not configured, or it has a wrong value'));
         }
         $orderID = (int) $session->get('orderID');
-        $shopID = $orderID . chr(round(mt_rand(ord('a'), ord('f')))) . $app->make(Identifier::class)->getString(40);
+        $shopID = ((string) $orderID) . '/' . date('Y');
         $order = CommunityStore\Order\Order::getByID($orderID);
         $initLog = new CommunityStoreBccPayway\Entity\InitLog($client->getEnvironment(), $order, $shopID);
         if ($initLog->getEnvironment() === '') {
