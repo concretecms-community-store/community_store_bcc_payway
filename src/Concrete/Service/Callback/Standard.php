@@ -6,6 +6,7 @@ use Concrete\Core\Application\Service\UserInterface;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
+use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 use Concrete\Package\CommunityStoreBccPayway\Entity;
 use Doctrine\ORM\EntityManagerInterface;
 use MLocati\PayWay;
@@ -25,19 +26,25 @@ class Standard
     protected $entityManager;
 
     /**
-     * @var \Concrete\Core\Application\Service\UserInterface
+     * @var \Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface
      */
-    protected $userInterface;
+    protected $urlResolver;
 
     /**
      * @var \Concrete\Core\Http\ResponseFactoryInterface
      */
     protected $responseFactory;
 
-    public function __construct(Request $request, EntityManagerInterface $entityManager, ResponseFactoryInterface $responseFactory, UserInterface $userInterface)
+    /**
+     * @var \Concrete\Core\Application\Service\UserInterface
+     */
+    protected $userInterface;
+
+    public function __construct(Request $request, EntityManagerInterface $entityManager, ResolverManagerInterface $urlResolver, ResponseFactoryInterface $responseFactory, UserInterface $userInterface)
     {
         $this->request = $request;
         $this->entityManager = $entityManager;
+        $this->urlResolver = $urlResolver;
         $this->responseFactory = $responseFactory;
         $this->userInterface = $userInterface;
     }
@@ -52,19 +59,19 @@ class Standard
             $init = null;
         }
         if ($init === null) {
-            return $this->responseFactory->redirect(['/checkout'], Response::HTTP_MOVED_PERMANENTLY);
+            return $this->buildRedirect('/checkout');
         }
         /** @var Entity\InitLog $init */
         $verify = $init->getVerifyLogs()->last();
         if ($verify === null || $verify === false) {
-            return $this->responseFactory->redirect(['/checkout'], Response::HTTP_MOVED_PERMANENTLY);
+            return $this->buildRedirect('/checkout');
         }
         /** @var Entity\VerifyLog $verify */
         switch ($verify->getRC()) {
             case PayWay\Dictionary\RC::TRANSACTION_OK:
-                return $this->responseFactory->redirect(['/checkout/complete'], Response::HTTP_MOVED_PERMANENTLY);
+                return $this->buildRedirect('/checkout/complete');
             case PayWay\Dictionary\RC::TRANSACTION_CANCELED_BY_USER:
-                return $this->responseFactory->redirect(['/checkout'], Response::HTTP_MOVED_PERMANENTLY);
+                return $this->buildRedirect('/checkout');
         }
 
         return $this->userInterface->buildErrorResponse(
@@ -72,11 +79,23 @@ class Standard
             implode('<br />', [
                 t('We are sorry: the payment did NOT complete successfully.'),
                 '',
-                '<a href="' . h((string) $this->responseFactory->redirect(['/checkout'])) . '">' . t('Click here to return to the checkout page.') . '</a>',
+                '<a href="' . h((string) $this->urlResolver->resolve(['/checkout'])) . '">' . t('Click here to return to the checkout page.') . '</a>',
                 '',
                 '',
                 '<small>' . t('Error code: %s', h($verify->getRC())) . '</small>',
             ])
         );
+    }
+
+    /**
+     * @param string $relativePath
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function buildRedirect($relativePath)
+    {
+        $url = $this->urlResolver->resolve([$relativePath]);
+
+        return $this->responseFactory->redirect((string) $url, Response::HTTP_MOVED_PERMANENTLY);
     }
 }
