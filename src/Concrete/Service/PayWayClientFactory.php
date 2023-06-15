@@ -3,7 +3,6 @@
 namespace Concrete\Package\CommunityStoreBccPayway\Service;
 
 use Concrete\Core\Config\Repository\Repository;
-use MLocati\PayWay;
 
 defined('C5_EXECUTE') or die('Access Denied');
 
@@ -15,59 +14,34 @@ class PayWayClientFactory
     protected $config;
 
     /**
-     * @var \Concrete\Package\CommunityStoreBccPayway\Service\Http\ClientFactory
+     * @var \Concrete\Package\CommunityStoreBccPayway\Service\Http\DriverFactory
      */
-    protected $httpClientFactory;
+    protected $httpDriverFactory;
 
-    public function __construct(Repository $config, Http\ClientFactory $httpClientFactory)
+    public function __construct(Repository $config, Http\DriverFactory $httpDriverFactory)
     {
         $this->config = $config;
-        $this->httpClientFactory = $httpClientFactory;
+        $this->httpDriverFactory = $httpDriverFactory;
     }
 
     /**
-     * @param string $terminalID [out] the terminal ID to be used
+     * @param string $environment the environment to be used (empty string to use the default)
      *
-     * @return \MLocati\PayWay\Client
+     * @return \Concrete\Package\CommunityStoreBccPayway\Service\PayWayClient
      */
-    public function buildClient(&$terminalID = '')
+    public function buildClient($environment = '')
     {
-        return $this->buildClientForEnvironment($this->config->get('community_store_bcc_payway::options.environment'), $terminalID);
-    }
-
-    /**
-     * @param string $terminalID the terminal ID for which you want the client
-     *
-     * @return \MLocati\PayWay\Client|null NULL if $terminalID couldn't be found
-     */
-    public function buildClientByTerminalID($terminalID)
-    {
-        $environmentsData = $this->config->get('community_store_bcc_payway::options.environments');
-        $environmentKeys = is_array($environmentsData) ? array_keys($environmentsData) : [];
-        foreach ($environmentKeys as $environmentKey) {
-            $terminalIDForEnvironment = (string) $this->config->get("community_store_bcc_payway::options.environments.{$environmentKey}.terminalID");
-            if ($terminalIDForEnvironment === $terminalID) {
-                return $this->buildClientForEnvironment($environmentKey);
-            }
+        $environment = (string) $environment;
+        if ($environment === '') {
+            $environment = (string) $this->config->get('community_store_bcc_payway::options.environment');
         }
 
-        return null;
-    }
-
-    /**
-     * @param string $environmentKey
-     * @param string $terminalID [out] the terminal ID to be used
-     *
-     * @return \MLocati\PayWay\Client
-     */
-    protected function buildClientForEnvironment($environmentKey, &$terminalID = '')
-    {
-        $terminalID = (string) $this->config->get("community_store_bcc_payway::options.environments.{$environmentKey}.terminalID");
-
-        return new PayWay\Client(
-            $this->config->get("community_store_bcc_payway::options.environments.{$environmentKey}.servicesURL"),
-            $this->config->get("community_store_bcc_payway::options.environments.{$environmentKey}.signatureKey"),
-            $this->httpClientFactory->createDriver()
+        return new PayWayClient(
+            $environment,
+            $this->config->get("community_store_bcc_payway::options.environments.{$environment}.terminalID"),
+            $this->config->get("community_store_bcc_payway::options.environments.{$environment}.servicesURL"),
+            $this->config->get("community_store_bcc_payway::options.environments.{$environment}.signatureKey"),
+            $this->httpDriverFactory->createDriver()
         );
     }
 }

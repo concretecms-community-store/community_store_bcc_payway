@@ -7,7 +7,7 @@ use Concrete\Core\Config\Repository\Repository;
 
 defined('C5_EXECUTE') or die('Access Denied');
 
-class ClientFactory
+class DriverFactory
 {
     /**
      * @var int

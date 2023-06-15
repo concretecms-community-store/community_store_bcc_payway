@@ -8,6 +8,7 @@ use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Package\CommunityStore\Src\CommunityStore;
 use Concrete\Package\CommunityStoreBccPayway;
+use Concrete\Package\CommunityStoreBccPayway\Service\PayWayClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use MLocati\PayWay;
@@ -54,9 +55,9 @@ class Server2Server
             $initLog = $this->resolveInitLog($receivedData);
             $order = $initLog->getAssociatedOrder();
             $verifyLog->setInitLog($initLog);
-            $request = $this->createInitRequest($receivedData);
+            $payWayClient = $this->payWayClientFactory->buildClient($initLog->getEnvironment());
+            $request = $this->createVerifyRequest($payWayClient, $receivedData);
             $verifyLog->setRequestJson(json_encode($request, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            $payWayClient = $this->resolvepayWayClient($receivedData);
             $payWayClient->addListener(static function (PayWay\Http\Event $event) use ($verifyLog) {
                 $verifyLog
                     ->setRequestUrl($event->getUrl())
@@ -125,30 +126,14 @@ class Server2Server
     /**
      * @return \MLocati\PayWay\Verify\Request
      */
-    protected function createInitRequest(PayWay\Server2Server\RequestData $receivedData)
+    protected function createVerifyRequest(PayWayClient $payWayClient, PayWay\Server2Server\RequestData $receivedData)
     {
         $request = new PayWay\Verify\Request();
 
         return $request
-            ->setTID($receivedData->getTID())
+            ->setTID($payWayClient->getTerminalID())
             ->setShopID($receivedData->getShopID())
             ->setPaymentID($receivedData->getPaymentID())
         ;
-    }
-
-    /**
-     * @return \MLocati\PayWay\Client
-     */
-    protected function resolvepayWayClient(PayWay\Server2Server\RequestData $receivedData)
-    {
-        if ($receivedData->getTID() === '') {
-            throw new UserMessageException(t('Missing parameter: %s', 'tid'));
-        }
-        $payWayClient = $this->payWayClientFactory->buildClientByTerminalID($receivedData->getTID());
-        if ($payWayClient === null) {
-            throw new UserMessageException(t("'%s' is not a valid/known terminal ID", $receivedData->getTID()));
-        }
-
-        return $payWayClient;
     }
 }

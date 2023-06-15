@@ -182,6 +182,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $em = $app->make(EntityManagerInterface::class);
         $config = $app->make(Repository::class);
         $urlResolver = $app->make(ResolverManagerInterface::class);
+        $client = $app->make(CommunityStoreBccPayway\Service\PayWayClientFactory::class)->buildClient();
         $session = $app->make('session');
         $siteName = tc('SiteName', $app->make('site')->getSite()->getSiteName());
         $currencyCode = $config->get('community_store.currency');
@@ -191,15 +192,13 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $orderID = (int) $session->get('orderID');
         $shopID = $orderID . chr(round(mt_rand(ord('a'), ord('f')))) . $app->make(Identifier::class)->getString(40);
         $order = CommunityStore\Order\Order::getByID($orderID);
-        $initLog = new CommunityStoreBccPayway\Entity\InitLog($order, $shopID);
+        $initLog = new CommunityStoreBccPayway\Entity\InitLog($client->getEnvironment(), $order, $shopID);
         $initResponse = null;
         try {
             $customer = new CommunityStore\Customer\Customer();
-            $terminalID = '';
-            $client = $app->make(CommunityStoreBccPayway\Service\PayWayClientFactory::class)->buildClient($terminalID);
             $initRequest = new PayWay\Init\Request();
             $initRequest
-                ->setTID($terminalID)
+                ->setTID($client->getTerminalID())
                 ->setShopID($shopID)
                 ->setShopUserRef($customer->getEmail())
                 ->setTrType(PayWay\Dictionary\TrType::CODE_PURCHASE)

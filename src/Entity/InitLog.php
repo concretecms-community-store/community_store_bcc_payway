@@ -38,6 +38,15 @@ class InitLog
     protected $createdOn;
 
     /**
+     * The environment (sandbox or production).
+     *
+     * @Doctrine\ORM\Mapping\Column(type="string", length=32, nullable=false, options={"comment": "Environment (sandbox or production)"})
+     *
+     * @var string
+     */
+    protected $environment;
+
+    /**
      * The order associated to this request.
      *
      * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="Concrete\Package\CommunityStore\Src\CommunityStore\Order\Order")
@@ -130,11 +139,13 @@ class InitLog
     protected $verifyLogs;
 
     /**
+     * @param string $environment
      * @param string $shopID
      */
-    public function __construct(Order $associatedOrder, $shopID)
+    public function __construct($environment, Order $associatedOrder, $shopID)
     {
         $this->createdOn = new DateTime();
+        $this->environment = $environment;
         $this->associatedOrder = $associatedOrder;
         $this->shopID = $shopID;
         $this->requestJson = '';
@@ -165,6 +176,16 @@ class InitLog
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Get the environment (sandbox or production).
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 
     /**
