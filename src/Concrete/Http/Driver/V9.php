@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service\Http\Driver;
+namespace Concrete\Package\CommunityStoreBccPayway\Http\Driver;
 
 use Concrete\Core\Http\Client\Client;
 use Exception;

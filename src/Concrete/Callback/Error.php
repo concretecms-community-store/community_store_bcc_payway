@@ -1,10 +1,10 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service\Callback;
+namespace Concrete\Package\CommunityStoreBccPayway\Callback;
 
 use Concrete\Core\Application\Service\UserInterface;
 use Concrete\Core\Http\Request;
-use Concrete\Package\CommunityStoreBccPayway\Entity\ErrorLog;
+use Concrete\Package\CommunityStoreBccPayway;
 use Doctrine\ORM\EntityManagerInterface;
 use MLocati\PayWay;
 
@@ -37,7 +37,7 @@ class Error
     public function __invoke()
     {
         $receivedData = new PayWay\Error\RequestData($this->request->query->all());
-        $errorLog = new ErrorLog(json_encode($receivedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $errorLog = new CommunityStoreBccPayway\Entity\ErrorLog(json_encode($receivedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $errorLog->setRC($receivedData->getRC());
         $this->entityManager->persist($errorLog);
         $this->entityManager->flush();

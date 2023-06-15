@@ -55,7 +55,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $app = Application::getFacadeApplication();
         $config = $app->make(Repository::class);
         $this->set('form', $app->make('helper/form'));
-        $this->set('creditCardImages', $app->make(CommunityStoreBccPayway\Service\CreditCardImages::class));
+        $this->set('creditCardImages', $app->make(CommunityStoreBccPayway\CreditCardImages::class));
         $this->set('environment', (string) $config->get('community_store_bcc_payway::options.environment'));
         $environments = [
             'sandbox' => t('Test'),
@@ -146,7 +146,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         }
         $bccPaywayCreditCardImages = isset($data['bccPaywayCreditCardImages']) ? $data['bccPaywayCreditCardImages'] : null;
         if (is_array($bccPaywayCreditCardImages)) {
-            $app->make(CommunityStoreBccPayway\Service\CreditCardImages::class)->setWantedImageHandles($bccPaywayCreditCardImages, true);
+            $app->make(CommunityStoreBccPayway\CreditCardImages::class)->setWantedImageHandles($bccPaywayCreditCardImages, true);
         }
     }
 
@@ -158,7 +158,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
     public function checkoutForm()
     {
         $app = Application::getFacadeApplication();
-        $this->set('creditCardImages', $app->make(CommunityStoreBccPayway\Service\CreditCardImages::class));
+        $this->set('creditCardImages', $app->make(CommunityStoreBccPayway\CreditCardImages::class));
     }
 
     /**
@@ -182,7 +182,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $em = $app->make(EntityManagerInterface::class);
         $config = $app->make(Repository::class);
         $urlResolver = $app->make(ResolverManagerInterface::class);
-        $client = $app->make(CommunityStoreBccPayway\Service\PayWayClientFactory::class)->buildClient();
+        $client = $app->make(CommunityStoreBccPayway\PayWayClientFactory::class)->buildClient();
         $session = $app->make('session');
         $siteName = tc('SiteName', $app->make('site')->getSite()->getSiteName());
         $currencyCode = $config->get('community_store.currency');

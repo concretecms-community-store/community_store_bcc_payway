@@ -7,7 +7,6 @@ use Concrete\Core\Database\EntityManager\Provider\StandardPackageProvider;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Routing\Router;
 use Concrete\Package\CommunityStore\Src\CommunityStore;
-use Concrete\Package\CommunityStoreBccPayway\Service\Callback;
 
 defined('C5_EXECUTE') or die('Access Denied');
 

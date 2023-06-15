@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service;
+namespace Concrete\Package\CommunityStoreBccPayway;
 
 use MLocati\PayWay;
 

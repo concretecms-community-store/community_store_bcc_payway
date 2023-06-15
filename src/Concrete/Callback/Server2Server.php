@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service\Callback;
+namespace Concrete\Package\CommunityStoreBccPayway\Callback;
 
 use Concrete\Core\Error\UserMessageException;
 use Concrete\Core\Http\Request;
@@ -8,7 +8,6 @@ use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Package\CommunityStore\Src\CommunityStore;
 use Concrete\Package\CommunityStoreBccPayway;
-use Concrete\Package\CommunityStoreBccPayway\Service\PayWayClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use MLocati\PayWay;
@@ -29,7 +28,7 @@ class Server2Server
     protected $entityManager;
 
     /**
-     * @var \Concrete\Package\CommunityStoreBccPayway\Service\PayWayClientFactory
+     * @var \Concrete\Package\CommunityStoreBccPayway\PayWayClientFactory
      */
     protected $payWayClientFactory;
 
@@ -38,7 +37,7 @@ class Server2Server
      */
     protected $responseFactory;
 
-    public function __construct(Request $request, EntityManagerInterface $entityManager, CommunityStoreBccPayway\Service\PayWayClientFactory $payWayClientFactory, ResponseFactoryInterface $responseFactory)
+    public function __construct(Request $request, EntityManagerInterface $entityManager, CommunityStoreBccPayway\PayWayClientFactory $payWayClientFactory, ResponseFactoryInterface $responseFactory)
     {
         $this->request = $request;
         $this->entityManager = $entityManager;
@@ -126,7 +125,7 @@ class Server2Server
     /**
      * @return \MLocati\PayWay\Verify\Request
      */
-    protected function createVerifyRequest(PayWayClient $payWayClient, PayWay\Server2Server\RequestData $receivedData)
+    protected function createVerifyRequest(CommunityStoreBccPayway\PayWayClient $payWayClient, PayWay\Server2Server\RequestData $receivedData)
     {
         $request = new PayWay\Verify\Request();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service;
+namespace Concrete\Package\CommunityStoreBccPayway;
 
 use Concrete\Core\Config\Repository\Repository;
 
@@ -14,7 +14,7 @@ class PayWayClientFactory
     protected $config;
 
     /**
-     * @var \Concrete\Package\CommunityStoreBccPayway\Service\Http\DriverFactory
+     * @var \Concrete\Package\CommunityStoreBccPayway\Http\DriverFactory
      */
     protected $httpDriverFactory;
 
@@ -27,7 +27,7 @@ class PayWayClientFactory
     /**
      * @param string $environment the environment to be used (empty string to use the default)
      *
-     * @return \Concrete\Package\CommunityStoreBccPayway\Service\PayWayClient
+     * @return \Concrete\Package\CommunityStoreBccPayway\PayWayClient
      */
     public function buildClient($environment = '')
     {

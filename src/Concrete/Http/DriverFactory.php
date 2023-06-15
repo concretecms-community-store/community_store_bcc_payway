@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service\Http;
+namespace Concrete\Package\CommunityStoreBccPayway\Http;
 
 use Concrete\Core\Application\Application;
 use Concrete\Core\Config\Repository\Repository;

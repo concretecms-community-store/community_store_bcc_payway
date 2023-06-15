@@ -10,7 +10,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 extract($vars);
 
 /**
- * @var Concrete\Package\CommunityStoreBccPayway\Service\CreditCardImages $creditCardImages
+ * @var Concrete\Package\CommunityStoreBccPayway\CreditCardImages $creditCardImages
  */
 
 $images = $creditCardImages->renderWantedImages(48, null, '', ' ');

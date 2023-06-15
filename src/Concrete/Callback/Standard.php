@@ -1,13 +1,13 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway\Service\Callback;
+namespace Concrete\Package\CommunityStoreBccPayway\Callback;
 
 use Concrete\Core\Application\Service\UserInterface;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
-use Concrete\Package\CommunityStoreBccPayway\Entity;
+use Concrete\Package\CommunityStoreBccPayway;
 use Doctrine\ORM\EntityManagerInterface;
 use MLocati\PayWay;
 
@@ -54,19 +54,19 @@ class Standard
         $qsData = $this->request->query->all();
         $shopID = isset($qsData['id']) ? $qsData['id'] : '';
         if (is_string($shopID) && $shopID !== '') {
-            $init = $this->entityManager->getRepository(Entity\InitLog::class)->findOneBy(['shopID' => $shopID]);
+            $init = $this->entityManager->getRepository(CommunityStoreBccPayway\Entity\InitLog::class)->findOneBy(['shopID' => $shopID]);
         } else {
             $init = null;
         }
         if ($init === null) {
             return $this->buildRedirect('/checkout');
         }
-        /** @var Entity\InitLog $init */
+        /** @var CommunityStoreBccPayway\Entity\InitLog $init */
         $verify = $init->getVerifyLogs()->last();
         if ($verify === null || $verify === false) {
             return $this->buildRedirect('/checkout');
         }
-        /** @var Entity\VerifyLog $verify */
+        /** @var CommunityStoreBccPayway\Entity\VerifyLog $verify */
         switch ($verify->getRC()) {
             case PayWay\Dictionary\RC::TRANSACTION_OK:
                 return $this->buildRedirect('/checkout/complete');

@@ -11,7 +11,7 @@ extract($vars);
 
 /**
  * @var Concrete\Core\Form\Service\Form $form
- * @var Concrete\Package\CommunityStoreBccPayway\Service\CreditCardImages $creditCardImages
+ * @var Concrete\Package\CommunityStoreBccPayway\CreditCardImages $creditCardImages
  * @var string $environment
  * @var array $environments
  * @var array $servicesURLs
