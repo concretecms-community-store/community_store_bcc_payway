@@ -1,12 +1,13 @@
 <?php
 
-namespace Concrete\Package\CommunityStoreBccPayway;
+namespace Concrete\Package\CommunityStoreBccPayway\PayWayClient;
 
 use Concrete\Core\Config\Repository\Repository;
+use Concrete\Package\CommunityStoreBccPayway;
 
 defined('C5_EXECUTE') or die('Access Denied');
 
-class PayWayClientFactory
+class Factory
 {
     /**
      * @var \Concrete\Core\Config\Repository\Repository
@@ -18,7 +19,7 @@ class PayWayClientFactory
      */
     protected $httpDriverFactory;
 
-    public function __construct(Repository $config, Http\DriverFactory $httpDriverFactory)
+    public function __construct(Repository $config, CommunityStoreBccPayway\Http\DriverFactory $httpDriverFactory)
     {
         $this->config = $config;
         $this->httpDriverFactory = $httpDriverFactory;
@@ -36,7 +37,7 @@ class PayWayClientFactory
             $environment = (string) $this->config->get('community_store_bcc_payway::options.environment');
         }
 
-        return new PayWayClient(
+        return new CommunityStoreBccPayway\PayWayClient(
             $environment,
             $this->config->get("community_store_bcc_payway::options.environments.{$environment}.terminalID"),
             $this->config->get("community_store_bcc_payway::options.environments.{$environment}.servicesURL"),

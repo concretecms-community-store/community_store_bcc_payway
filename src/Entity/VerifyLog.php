@@ -36,6 +36,15 @@ class VerifyLog
     protected $createdOn;
 
     /**
+     * The place where the verification occurred (callbackURL for server2server, notifyURL for client).
+     *
+     * @Doctrine\ORM\Mapping\Column(type="string", length="50", nullable=false, options={"comment": "Place where the verification occurred (callbackURL for server2server, notifyURL for client)"})
+     *
+     * @var string
+     */
+    protected $place;
+
+    /**
      * The received data (in JSON format).
      *
      * @Doctrine\ORM\Mapping\Column(type="text", nullable=false, options={"comment": "Received data (in JSON format)"})
@@ -118,11 +127,13 @@ class VerifyLog
     protected $exception;
 
     /**
+     * @param string $place callbackURL for server2server, notifyURL for client
      * @param string $receivedJson
      */
-    public function __construct($receivedJson)
+    public function __construct($place, $receivedJson)
     {
         $this->createdOn = new DateTime();
+        $this->place = $place;
         $this->receivedJson = (string) $receivedJson;
         $this->requestJson = '';
         $this->requestUrl = '';
@@ -151,6 +162,16 @@ class VerifyLog
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Get the place where the verification occurred (callbackURL for server2server, notifyURL for client).
+     *
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 
     /**

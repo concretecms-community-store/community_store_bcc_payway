@@ -182,7 +182,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         $em = $app->make(EntityManagerInterface::class);
         $config = $app->make(Repository::class);
         $urlResolver = $app->make(ResolverManagerInterface::class);
-        $client = $app->make(CommunityStoreBccPayway\PayWayClientFactory::class)->buildClient();
+        $client = $app->make(CommunityStoreBccPayway\PayWayClient\Factory::class)->buildClient();
         $session = $app->make('session');
         $siteName = tc('SiteName', $app->make('site')->getSite()->getSiteName());
         $currencyCode = $config->get('community_store.currency');
@@ -208,7 +208,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
                 ->setAmountAsFloat($order->getTotal())
                 ->setCurrencyCode($currencyCode)
                 ->setLangID(strtoupper(Localization::activeLanguage()))
-                ->setNotifyURL(((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_STANDARD])) . '?id=' . rawurlencode($shopID))
+                ->setNotifyURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_STANDARD]))
                 ->setErrorURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_ERROR]))
                 ->setCallbackURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_SERVER2SERVER]))
                 ->setDescription(t('Order %1$s on %2$s', $orderID, $siteName))
@@ -229,10 +229,12 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         } catch (Throwable $x) {
             $exception = $x;
         } finally {
-            if ($exception instanceof \MLocati\PayWay\Exception) {
-                $initLog->setException($exception->getMessage());
-            } else {
-                $initLog->setException((string) $exception);
+            if ($exception !== null) {
+                if ($exception instanceof \MLocati\PayWay\Exception) {
+                    $initLog->setException($exception->getMessage());
+                } else {
+                    $initLog->setException((string) $exception);
+                }
             }
             if ($initResponse !== null) {
                 $initLog->setPaymentID($initResponse->getPaymentID());
@@ -246,6 +248,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
         if ($initResponse->getRc() !== PayWay\Dictionary\RC::TRANSACTION_OK || $initResponse->isError() || $initResponse->getRedirectURL() === '') {
             throw new UserMessageException(t('Transaction initialization failed (error code: %s)', $initResponse->getRc()));
         }
+        $session->set('storeBccPayWayShopID', $shopID);
 
         return $initResponse->getRedirectURL();
     }
