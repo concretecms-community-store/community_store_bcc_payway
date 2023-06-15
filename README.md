@@ -1,6 +1,6 @@
 # Community Store BCC PayWay / IGFS Buy Now
 
-This package works fowith the Community Store package for ConcreteCMS
+This package is for the Community Store package for ConcreteCMS.
 
 It lets you accepts payments with the PayNow service offered by a group of Italian banks called BCC (Banche di Credito Cooperativo).
 
