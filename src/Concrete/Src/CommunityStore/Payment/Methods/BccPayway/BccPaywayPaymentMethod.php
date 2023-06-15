@@ -211,21 +211,6 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
                 ->setCallbackURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_SERVER2SERVER]))
                 ->setDescription(t('Order %1$s on %2$s', $orderID, $siteName))
             ;
-            $initRequest->getLevel3Info()
-                ->setBillingEmail($customer->getEmail())
-                ->setBillingStreet($customer->getAddressValue('billing_address', 'address1'))
-                ->setBillingStreet2($customer->getAddressValue('billing_address', 'address2'))
-                ->setBillingPostalCode($customer->getAddressValue('billing_address', 'postal_code'))
-                ->setBillingCity($customer->getAddressValue('billing_address', 'city'))
-                ->setBillingState($customer->getAddressValue('billing_address', 'state_province'))
-                ->setBillingCountryCode(PayWay\Dictionary\Country::getCodeFromIso2($customer->getAddressValue('billing_address', 'country')))
-                ->setDestinationStreet($customer->getAddressValue('shipping_address', 'address1'))
-                ->setDestinationStreet2($customer->getAddressValue('shipping_address', 'address2'))
-                ->setDestinationPostalCode($customer->getAddressValue('shipping_address', 'postal_code'))
-                ->setDestinationCity($customer->getAddressValue('shipping_address', 'city'))
-                ->setDestinationState($customer->getAddressValue('shipping_address', 'state_province'))
-                ->setDestinationCountryCode(PayWay\Dictionary\Country::getCodeFromIso2($customer->getAddressValue('shipping_address', 'country')))
-            ;
             $initLog->setRequestJson(json_encode($initRequest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
             $client->addListener(static function (PayWay\Http\Event $event) use ($initLog) {
                 $initLog
