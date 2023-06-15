@@ -53,7 +53,7 @@ class Server2Server
         try {
             $initLog = $this->resolveInitLog($receivedData);
             $order = $initLog->getAssociatedOrder();
-            $verifyLog->setAssociatedInit($initLog);
+            $verifyLog->setInitLog($initLog);
             $request = $this->createInitRequest($receivedData);
             $verifyLog->setRequestJson(json_encode($request, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
             $payWayClient = $this->resolvepayWayClient($initLog);
