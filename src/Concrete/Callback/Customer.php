@@ -11,7 +11,7 @@ use MLocati\PayWay;
 
 defined('C5_EXECUTE') or die('Access Denied');
 
-class Standard
+class Customer
 {
     /**
      * @var \Concrete\Package\CommunityStoreBccPayway\PayWayVerifier
@@ -76,6 +76,6 @@ class Standard
     {
         $url = $this->urlResolver->resolve([$relativePath]);
 
-        return $this->responseFactory->redirect((string) $url, Response::HTTP_MOVED_PERMANENTLY);
+        return $this->responseFactory->redirect((string) $url, Response::HTTP_FOUND);
     }
 }

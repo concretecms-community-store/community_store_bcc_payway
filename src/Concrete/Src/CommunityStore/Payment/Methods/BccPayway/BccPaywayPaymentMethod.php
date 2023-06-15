@@ -208,7 +208,7 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
                 ->setAmountAsFloat($order->getTotal())
                 ->setCurrencyCode($currencyCode)
                 ->setLangID(strtoupper(Localization::activeLanguage()))
-                ->setNotifyURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_STANDARD]))
+                ->setNotifyURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_CUSTOMER]))
                 ->setErrorURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_ERROR]))
                 ->setCallbackURL((string) $urlResolver->resolve([CommunityStoreBccPayway\Controller::PATH_CALLBACK_SERVER2SERVER]))
                 ->setDescription(t('Order %1$s on %2$s', $orderID, $siteName))

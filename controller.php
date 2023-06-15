@@ -14,7 +14,7 @@ class Controller extends Package implements ProviderAggregateInterface
 {
     const PAYMENTMETHOD_HANDLE = 'bcc_payway';
 
-    const PATH_CALLBACK_STANDARD = '/ccm/community_store/bcc_payway/callback/standard';
+    const PATH_CALLBACK_CUSTOMER = '/ccm/community_store/bcc_payway/callback/customer';
 
     const PATH_CALLBACK_SERVER2SERVER = '/ccm/community_store/bcc_payway/callback/server2server';
 
@@ -122,7 +122,7 @@ class Controller extends Package implements ProviderAggregateInterface
     private function registerRoutes()
     {
         $router = $this->app->make(Router::class);
-        $router->get(static::PATH_CALLBACK_STANDARD, [Callback\Standard::class, '__invoke']);
+        $router->get(static::PATH_CALLBACK_CUSTOMER, [Callback\Customer::class, '__invoke']);
         $router->post(static::PATH_CALLBACK_SERVER2SERVER, [Callback\Server2Server::class, '__invoke']);
         $router->get(static::PATH_CALLBACK_ERROR, [Callback\Error::class, '__invoke']);
     }
