@@ -14,5 +14,5 @@ return [
             'signatureKey' => '',
         ],
     ],
-    'creditCardImages' => 'Visa American_Express Maestro Bancomat_Pay PostePay PayPal Amazon_Pay Apple_Pay Google_Pay Satispay MyBank',
+    'creditCardImages' => 'Visa Mastercard American_Express Maestro Bancomat_Pay PostePay PayPal Amazon_Pay Apple_Pay Google_Pay Satispay MyBank',
 ];
