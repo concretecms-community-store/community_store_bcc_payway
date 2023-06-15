@@ -23,7 +23,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     protected $pkgHandle = 'community_store_bcc_payway';
 
-    protected $pkgVersion = '0.0.1';
+    protected $pkgVersion = '0.0.2';
 
     /**
      * {@inheritdoc}
