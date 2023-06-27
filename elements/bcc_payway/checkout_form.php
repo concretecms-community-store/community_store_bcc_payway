@@ -11,6 +11,7 @@ extract($vars);
 
 /**
  * @var Concrete\Package\CommunityStoreBccPayway\CreditCardImages $creditCardImages
+ * @var string $environment
  */
 
 $images = $creditCardImages->renderWantedImages(48, null, '', ' ');
@@ -24,3 +25,13 @@ $images = $creditCardImages->renderWantedImages(48, null, '', ' ');
     }
     ?>
 </div>
+<?php
+if ($environment === 'sandbox') {
+    ?>
+    <div class="alert alert-info">
+        <?= h(t('This payment method is currently in "test" mode.')) ?><br />
+        <?= t('That means that even if you provide your credit card details, you will not actually be charged anything.') ?><br />
+        <?= t('In order to test the payment method you can use any credit card number, for example: %s', '<code>4005519200000004</code>') ?>
+    </div>
+    <?php
+}

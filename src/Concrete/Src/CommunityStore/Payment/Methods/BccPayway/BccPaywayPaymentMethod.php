@@ -7,7 +7,6 @@ use Concrete\Core\Error\UserMessageException;
 use Concrete\Core\Localization\Localization;
 use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
-use Concrete\Core\Utility\Service\Identifier;
 use Concrete\Package\CommunityStore\Src\CommunityStore;
 use Concrete\Package\CommunityStoreBccPayway;
 use Doctrine\ORM\EntityManagerInterface;
@@ -158,6 +157,8 @@ class BccPaywayPaymentMethod extends CommunityStore\Payment\Method
     public function checkoutForm()
     {
         $app = Application::getFacadeApplication();
+        $config = $app->make(Repository::class);
+        $this->set('environment', (string) $config->get('community_store_bcc_payway::options.environment'));
         $this->set('creditCardImages', $app->make(CommunityStoreBccPayway\CreditCardImages::class));
     }
 
