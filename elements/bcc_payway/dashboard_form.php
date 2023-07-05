@@ -24,7 +24,7 @@ $unselectedOpacity = '0.3';
 
 <div class="form-group">
     <?= $form->label('bccPaywayEnvironment', t('Environment to be used')) ?>
-    <?= $form->select('bccPaywayEnvironment', $environments, $environments) ?>
+    <?= $form->select('bccPaywayEnvironment', $environments, $environment) ?>
 </div>
 
 <?php
