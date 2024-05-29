@@ -80,6 +80,9 @@ class Controller extends Package implements ProviderAggregateInterface
     public function on_start()
     {
         $this->registerAutoload();
+        $this->app->extend(CommunityStore\Payment\LogProviderFactory::class, function(CommunityStore\Payment\LogProviderFactory $factory) {
+            return $factory->registerProvider($this->app->make(Src\CommunityStore\Payment\Methods\BccPayway\LogProvider::class));
+        });
         if (!$this->app->isRunThroughCommandLineInterface()) {
             $this->registerRoutes();
         }
